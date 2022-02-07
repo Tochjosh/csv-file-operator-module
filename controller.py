@@ -12,38 +12,37 @@ class InputOutputRaw:
         """
         self.raw_array = []
         file_path = "../vaccination-coverage-byVaccineType.csv"
-        split_by = ","
-        counter = 0
+        serial_number = 0
 
         try:
             """
             opening up csv file using the file path variable declared and assigning it to the file variable
             """
             file = open(file_path, 'r')
-            for i in file:
+            for each_line in file:
                 """
                 we read each line split it by comma and then placed it in a memory array
                 """
-                each_line = i
-                split_line = each_line.split(split_by)
+                split_line = each_line.split(",")
 
-                if counter >= 1:
-                    data = Raw(counter, split_line[0], split_line[1], split_line[2], split_line[3], split_line[4],
+                if serial_number == 0:
+                    serial_number += 1
+
+                if serial_number >= 1:
+                    data = Raw(serial_number, split_line[0], split_line[1], split_line[2], split_line[3], split_line[4],
                                split_line[5], split_line[6], split_line[7], split_line[8],
                                split_line[9], split_line[10], split_line[11], split_line[12], split_line[13],
                                split_line[14])
                     self.raw_array.append(data)
-                    counter += 1
+                    serial_number += 1
 
-                if counter == 0:
-                    counter += 1
-                if counter >= 120:
+                if serial_number >= 120:
                     break
             file.close()
-            return 1
+            return True
         except IOError:
             print(file_path + ' file not found in path')
-            return 0
+            return False
 
     def show_records_in_array(self):
         """
@@ -76,31 +75,23 @@ class InputOutputRaw:
 
     def display_all_records(self):
         """
-        Read specific record from array using its ID
+        View all records in dataset
         """
-
         for i in self.raw_array:
-            return i
+            print(i)
 
-        print("All record has been sucessfully printed")
+        print("All record printed successfully")
 
     def check_record(self, id):
         """
-        check for record using that id.exists()
+        check if a record exists using the id
         """
-        count = 0
         for i in self.raw_array:
             if i.id == id:
-                count += 1
-                break
-
-        if count == 0:
-            return 0
-        else:
-            return 1
+                return True
+        return False
 
     def search_by_multiple_columns(self, col_list, val_list):
-
         """
         search record based on multiple column at the same time
         """
@@ -111,21 +102,20 @@ class InputOutputRaw:
             for i in col_list:
                 if type(getattr(data, i)) is int:
                     if getattr(data, i) == int(val_list[col_list.index(i)]):
-                        truity.append(1)
+                        truity.append(True)
                     else:
-                        truity.append(0)
+                        truity.append(False)
                 else:
                     if getattr(data, i).lower() == str(val_list[col_list.index(i)]).lower():
-                        truity.append(1)
+                        truity.append(True)
                     else:
-                        truity.append(0)
+                        truity.append(False)
 
             if all(truity):
                 result.append(data)
 
-        print('Matche(s)')
-        print('---------------')
+        print('\t\t\t\t---- Match(es) ----')
+        print('\t\t-----------------------------')
         for i in result:
             print(i)
-
         return result
