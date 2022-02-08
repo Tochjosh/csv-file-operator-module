@@ -1,6 +1,6 @@
 import unittest
 from data import Raw
-from controller import IORaw
+from controller import InputOutputRaw
 
 
 class TestProject(unittest.TestCase):
@@ -10,7 +10,7 @@ class TestProject(unittest.TestCase):
         test how the program reads in records if its placing data into correct fields of record object
         read file
         """
-        io_raw = IORaw()
+        io_raw = InputOutputRaw()
         io_raw.read_data()
         new_id = len(io_raw.raw_array) + 1
         raw_data = Raw(new_id, 32, 'Josuha', 'Lekan', '2021-11-16', 'Agro-BioTech', 4839, 32763
@@ -39,7 +39,7 @@ class TestProject(unittest.TestCase):
 
         reading through file
         """
-        io_raw = IORaw()
+        io_raw = InputOutputRaw()
         io_raw.read_data()
         last_inserted_id = len(io_raw.raw_array)
         new_id = last_inserted_id + 1
@@ -63,7 +63,7 @@ class TestProject(unittest.TestCase):
         read through file
         """
 
-        io_raw = IORaw()
+        io_raw = InputOutputRaw()
         io_raw.read_data()
         last_inserted_id = len(io_raw.raw_array)
         new_id = last_inserted_id + 1
@@ -101,7 +101,7 @@ class TestProject(unittest.TestCase):
         read file
         """
 
-        io_raw = IORaw()
+        io_raw = InputOutputRaw()
         io_raw.read_data()
         last_inserted_id = len(io_raw.raw_array)
         new_id = last_inserted_id + 1
@@ -131,7 +131,7 @@ class TestProject(unittest.TestCase):
         Read Through File
         """
 
-        io_raw = IORaw()
+        io_raw = InputOutputRaw()
         io_raw.read_data()
         last_inserted_id = len(io_raw.raw_array)
 

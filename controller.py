@@ -1,6 +1,6 @@
+import time
+
 from data import Raw
-import os.path
-from pathlib import Path
 
 
 class InputOutputRaw:
@@ -11,7 +11,9 @@ class InputOutputRaw:
         this method reads the csv file
         """
         self.raw_array = []
-        file_path = "../vaccination-coverage-byVaccineType.csv"
+        file_path = input("Enter the correct file path to load file ")
+        print('''               searching for file...''')
+        time.sleep(2)
         serial_number = 0
 
         try:
@@ -114,8 +116,8 @@ class InputOutputRaw:
             if all(truity):
                 result.append(data)
 
-        print('\t\t\t\t---- Match(es) ----')
-        print('\t\t-----------------------------')
+        print('''                       ---- Match(es) ----''')
+        print('''                -----------------------------''')
         for i in result:
             print(i)
         return result

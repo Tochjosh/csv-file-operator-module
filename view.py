@@ -4,20 +4,17 @@ import time
 
 
 def menu():
-    print("\n\n\n\t\t\t--- Starting Process ---")
-    print("--- MENU ---")
-    print("1. Reload the data from the dataset, replacing the data structure or database")
-    print("2. Display all the records held in the simple data structure")
-    print("3. Create a new record and store it in the simple data structure or database")
-    print("4. Select and edit a record held in the simple data structure in memory.")
-    print("5. Select and delete a record from the simple data structure in memory.")
-    print("6. Search multiple columns at the same time")
-    print("7. Exit")
-
-
-def print_pause(message, duration):
-    print(message)
-    time.sleep(duration)
+    print('''
+                            --- Starting Process ---
+                                 --- MENU ---
+    1. Reload the data from the dataset, replacing the data structure or database.
+    2. Display all the records held in the simple data structure.
+    3. Create a new record and store it in the simple data structure or database.
+    4. Select and edit a record held in the simple data structure in memory by id.
+    5. Select and delete a record from the simple data structure in memory by id.
+    6. Search multiple columns at the same time.
+    7. Exit.
+    ''')
 
 
 def multiple_search():
@@ -80,19 +77,20 @@ def user_inputs():
     return data
 
 
-print("\t\t\t--- Amer Chireh ---")
+print('''               --- WELCOME ---   ''')
 io_raw = InputOutputRaw()
 """
-if read file is successful and file is found successful
+if read file is successful and file is record_found successful
 """
-if io_raw.read_data() == 1:
+if io_raw.read_data():
     io_raw.show_records_in_array()
+    time.sleep(2)
     menu()
 
     choice = input("Enter your choice: ")
     while choice != "7":
         if choice != "7":
-            print("\t\t\t--- Amer Chireh ---")
+            print('''                --- processing... --- ''')
 
         if choice == "1":
             io_raw.show_records_in_array()
@@ -103,16 +101,16 @@ if io_raw.read_data() == 1:
             io_raw.create_new_record(user_inputs())
         elif choice == "4":
             id = input("To edit record enter id: ")
-            found = io_raw.check_record(int(id))
-            if found == 1:
+            record_record_found = io_raw.check_record(int(id))
+            if record_record_found:
                 new_id = int(id) - 1
                 io_raw.edit_record_by_id(new_id, user_inputs())
             else:
-                print("Record not exist")
+                print("Record does not exist")
         elif choice == "5":
             id = input("Enter id: ")
-            found = io_raw.check_record(int(id))
-            if found == 1:
+            record_found = io_raw.check_record(int(id))
+            if record_found:
                 new_id = int(id) - 1
                 io_raw.delete_record_by_id(new_id)
             else:
@@ -125,11 +123,7 @@ if io_raw.read_data() == 1:
 
         menu()
         """
-        we loop until user enters 6 then exits from the application
+        we loop until user enters 7 then exits from the application
         """
         choice = input("Please enter your choice: ")
 
-if __name__ == '__main__':
-    # this is just for test purpose
-    args = multiple_search()
-    io_raw.search_by_multiple_columns(*args)
