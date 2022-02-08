@@ -1,10 +1,10 @@
 import csv
 import time
 
-from data import Raw
+from data import Data
 
 
-class InputOutputRaw:
+class InputOutputData:
     raw_array = []  # this array stores the dataset from the csv
     length = 0
 
@@ -22,6 +22,8 @@ class InputOutputRaw:
             opening up csv file using the file path variable declared and assigning it to the file variable
             """
             file = open(file_path, 'r')
+            # reader = csv.reader(file)
+            # lines = len(list(reader))
 
             row_number = 0
             for each_line in file:
@@ -39,7 +41,7 @@ class InputOutputRaw:
                     if len(split_line) > self.length:
                         split_line.pop()
 
-                    data = Raw(row_number, *split_line)
+                    data = Data(row_number, *split_line)
                     self.raw_array.append(data)
                     row_number += 1
 
@@ -55,6 +57,7 @@ class InputOutputRaw:
         """
         for i in self.raw_array:
             print(i)
+        time.sleep(2)
 
     def create_new_record(self, new_data):
         """
@@ -102,25 +105,38 @@ class InputOutputRaw:
         """
 
         result = []
-        for data in self.raw_array:
-            truity = []
-            for i in col_list:
-                if type(getattr(data, i)) is int:
-                    if getattr(data, i) == int(val_list[col_list.index(i)]):
-                        truity.append(True)
+        try:
+            for data in self.raw_array:
+                truity = []
+                for i in col_list:
+                    if type(getattr(data, i)) is int:
+                        if getattr(data, i) == int(val_list[col_list.index(i)]):
+                            truity.append(True)
+                        else:
+                            truity.append(False)
                     else:
-                        truity.append(False)
-                else:
-                    if getattr(data, i).lower() == str(val_list[col_list.index(i)]).lower():
-                        truity.append(True)
-                    else:
-                        truity.append(False)
+                        if getattr(data, i).lower() == str(val_list[col_list.index(i)]).lower():
+                            truity.append(True)
+                        else:
+                            truity.append(False)
 
-            if all(truity):
-                result.append(data)
+                    if all(truity):
+                        result.append(data)
 
-        print('''                       ---- Match(es) ----''')
-        print('''                -----------------------------''')
+        except AttributeError:
+            print('Details not found. Please try again correctly')
+            time.sleep(2)
+            return False
+
+        print('''   filtering...  ''')
+        time.sleep(2)
+        if len(result) == 0:
+            print("No match(es) found!")
+            time.sleep(2)
+        else:
+
+            print('''                     ---- Match(es) ----''')
+
         for i in result:
             print(i)
         return result

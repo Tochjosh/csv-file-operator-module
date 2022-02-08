@@ -1,5 +1,5 @@
-from controller import InputOutputRaw
-from data import Raw
+from controller import InputOutputData
+from data import Data
 import time
 
 
@@ -69,16 +69,16 @@ def user_inputs():
     propweekdelta_partially = input("Enter propweekdelta_partially: ")
     propweekdelta_fully = input("Enter propweekdelta_fully: ")
 
-    data = Raw(len(io_raw.raw_array) + 1, pruid, prename, prfname, week_end, product_name,
-               numtotal_atleast1dose,
-               numtotal_partially, numtotal_fully, prop_atleast1dose, prop_partially,
-               prop_fully, numweekdelta_atleast1dose, numweekdelta_fully, propweekdelta_partially,
-               propweekdelta_fully)
+    data = Data(len(io_raw.raw_array) + 1, pruid, prename, prfname, week_end, product_name,
+                numtotal_atleast1dose,
+                numtotal_partially, numtotal_fully, prop_atleast1dose, prop_partially,
+                prop_fully, numweekdelta_atleast1dose, numweekdelta_fully, propweekdelta_partially,
+                propweekdelta_fully)
     return data
 
 
 print('''               --- WELCOME ---   ''')
-io_raw = InputOutputRaw()
+io_raw = InputOutputData()
 """
 if read file is successful and file is record_found successful
 """
@@ -117,7 +117,11 @@ if io_raw.read_data():
                 print("Record does not exist")
         elif choice == "6":
             args = multiple_search()
-            io_raw.search_by_multiple_columns(*args)
+            if args:
+                io_raw.search_by_multiple_columns(*args)
+            else:
+                time.sleep(2)
+                menu()
         else:
             print("Invalid choice")
 
@@ -126,4 +130,3 @@ if io_raw.read_data():
         we loop until user enters 7 then exits from the application
         """
         choice = input("Please enter your choice: ")
-
