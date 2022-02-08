@@ -44,7 +44,7 @@ class Data:
 
     # toString() method of Vaccine class which displays the data of all the properties of Covid
     def __str__(self):
-        return f"Data (id = {self.id}, pruid = {self.pruid}, prename = {self.prename}, prfname = {self.prfname}," \
+        return f"Data (id = {self.id}, pruid = {self.pruid}, prename = {self.prename}, prfname = {self.prfname}, " \
                f"week_end = {self.week_end}, product_name = {self.product_name}, numtotal_atleast1d" \
                f"ose = {self.numtotal_atleast1dose}, numtotal_partially = {self.numtotal_partially}, numtotal_fully" \
                f"= {self.numtotal_fully}, prop_atleast1dose = {self.prop_atleast1dose}, prop_partially = " \

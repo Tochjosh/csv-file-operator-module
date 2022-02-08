@@ -1,3 +1,4 @@
+import csv
 import time
 
 from data import Raw
@@ -5,6 +6,7 @@ from data import Raw
 
 class InputOutputRaw:
     raw_array = []  # this array stores the dataset from the csv
+    length = 0
 
     def read_data(self):
         """
@@ -14,32 +16,33 @@ class InputOutputRaw:
         file_path = input("Enter the correct file path to load file ")
         print('''               searching for file...''')
         time.sleep(2)
-        serial_number = 0
 
         try:
             """
             opening up csv file using the file path variable declared and assigning it to the file variable
             """
             file = open(file_path, 'r')
+
+            row_number = 0
             for each_line in file:
                 """
                 we read each line split it by comma and then placed it in a memory array
                 """
                 split_line = each_line.split(",")
 
-                if serial_number == 0:
-                    serial_number += 1
+                if row_number == 0:
+                    self.length = len(split_line)  # set the number of column names as the length of row
+                    row_number += 1
+                    continue
 
-                if serial_number >= 1:
-                    data = Raw(serial_number, split_line[0], split_line[1], split_line[2], split_line[3], split_line[4],
-                               split_line[5], split_line[6], split_line[7], split_line[8],
-                               split_line[9], split_line[10], split_line[11], split_line[12], split_line[13],
-                               split_line[14])
+                if row_number >= 1:
+                    if len(split_line) > self.length:
+                        split_line.pop()
+
+                    data = Raw(row_number, *split_line)
                     self.raw_array.append(data)
-                    serial_number += 1
+                    row_number += 1
 
-                if serial_number >= 120:
-                    break
             file.close()
             return True
         except IOError:
